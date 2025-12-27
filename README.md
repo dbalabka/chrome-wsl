@@ -27,9 +27,26 @@ npx @dbalabka/chrome-wsl
 - The script logs `socat` output to `/tmp/socat-9222.log`.
 - To stop the `socat` forwarder:
 ```sh
- npx @dbalabka/chrome-wsl -- --stop
+ npx @dbalabka/chrome-wsl --stop
 ```
 - Runs directly via npm without cloning; default entrypoint is `chrome-wsl` (matching the package name).
+
+#### Example
+```sh
+❯ npx @dbalabka/chrome-wsl
+✅ Detected Windows host IP: 172.18.112.1
+✅ Portproxy 172.18.112.1:9222 -> 127.0.0.1:9222 is configured.
+✅ Firewall rule "Chrome Remote Debug" exists.
+✅ socat is already installed.
+✅ Started socat (logging to /tmp/socat-9222.log).
+✅ Launched Chrome (pid 32408) with remote debugging.
+✅ Chrome is listening on port 9222.
+```
+```sh
+❯ npx @dbalabka/chrome-wsl --stop
+✅ Stopped tracked Chrome process (pid 32408).
+✅ Stopped socat forwarding for port 9222.
+```
 
 ### with NPM
 To install globally instead of npx:

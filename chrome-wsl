@@ -118,10 +118,6 @@ port_listening_info() {
   run_powershell "\$conns = Get-NetTCPConnection -LocalPort ${PORT} -ErrorAction SilentlyContinue | Select-Object -Property LocalAddress,LocalPort,RemoteAddress,RemotePort,State,OwningProcess; foreach (\$c in \$conns) { \$p = Get-Process -Id \$c.OwningProcess -ErrorAction SilentlyContinue; \$name = if (\$p) { \$p.Name } else { 'unknown' }; Write-Output (\"{0}:{1} owner={2} pid={3} state={4}\" -f \$c.LocalAddress, \$c.LocalPort, \$name, \$c.OwningProcess, \$c.State) }"
 }
 
-port_in_use_by_non_chrome() {
-  run_powershell "if (Get-NetTCPConnection -LocalPort ${PORT} -ErrorAction SilentlyContinue | Where-Object { \$p = Get-Process -Id \_.OwningProcess -ErrorAction SilentlyContinue; -not (\$p -and \$p.Name -eq 'chrome') }) { exit 0 } else { exit 1 }"
-}
-
 get_wsl_host_ip() {
   local host_ip
   host_ip=$(ip route | awk '/^default via / {print $3; exit}')
@@ -265,11 +261,6 @@ start_chrome() {
     if chrome_running; then
       err "Chrome is running (tracked pid $(get_pid "CHROME_PID")), but port ${PORT} is not listening. You may need to start Chrome with --remote-debugging-port=${PORT}."
     fi
-  fi
-
-  if port_in_use_by_non_chrome; then
-    err "Port ${PORT} is already in use by another process (not Chrome); details:"
-    port_listening_info
   fi
 
   local chrome_pid

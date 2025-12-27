@@ -9,7 +9,7 @@ else
 fi
 
 PORT=9222
-WINDOWS_CHROME_PATH='C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+WINDOWS_CHROME_PATH='C:\Program Files\Google\Chrome\Application\chrome.exe'
 FIREWALL_RULE_NAME='Chrome Remote Debug'
 PID_FILE="/tmp/start-chrome-wsl.pids"
 OK_MARK="✅"
@@ -106,7 +106,7 @@ port_listening_by_chrome() {
   local delay=1
   local i
   for ((i=1; i<=attempts; i++)); do
-    if run_powershell "if (Get-NetTCPConnection -LocalPort ${PORT} -ErrorAction SilentlyContinue | Where-Object { \\p = Get-Process -Id \\_.OwningProcess -ErrorAction SilentlyContinue; \\p -and \\p.Name -eq 'chrome' }) { exit 0 } else { exit 1 }"; then
+    if run_powershell "if (Get-NetTCPConnection -LocalPort ${PORT} -ErrorAction SilentlyContinue | Where-Object { \$p = Get-Process -Id \$_.OwningProcess -ErrorAction SilentlyContinue; \$p -and \$p.Name -eq 'chrome' }) { exit 0 } else { exit 1 }"; then
       return 0
     fi
     sleep "$delay"
@@ -254,7 +254,7 @@ stop_chrome() {
 
 start_chrome() {
   local chrome_cmd
-  chrome_cmd="\$args = @\(\"--remote-debugging-port=${PORT}\", \"--no-first-run\", \"--no-default-browser-check\", \"--user-data-dir=\$env:TEMP\\chrome-profile-stable\"\); \$p = Start-Process -FilePath \"${WINDOWS_CHROME_PATH}\" -ArgumentList \$args -PassThru; Write-Output \$p.Id"
+  chrome_cmd="\$args = @(\"--remote-debugging-port=${PORT}\", \"--no-first-run\", \"--no-default-browser-check\", \"--user-data-dir=\$env:TEMP\\chrome-profile-stable\"); \$p = Start-Process -FilePath \"${WINDOWS_CHROME_PATH}\" -ArgumentList \$args -PassThru; Write-Output \$p.Id"
 
   if [[ -n "$(get_pid "CHROME_PID")" ]]; then
     if port_listening_by_chrome; then

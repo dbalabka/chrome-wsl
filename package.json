@@ -18,13 +18,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dbalabka/wsl-chrome-portproxy-launcher.git"
+    "url": "git+https://github.com/dbalabka/chrome-wsl.git"
   },
   "author": "Dmitry Balabka",
   "bugs": {
-    "url": "https://github.com/dbalabka/wsl-chrome-portproxy-launcher/issues"
+    "url": "https://github.com/dbalabka/chrome-wsl/issues"
   },
-  "homepage": "https://github.com/dbalabka/wsl-chrome-portproxy-launcher#readme",
+  "homepage": "https://github.com/dbalabka/chrome-wsl#readme",
   "publishConfig": {
     "access": "public"
   }

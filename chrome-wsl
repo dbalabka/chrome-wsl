@@ -13,6 +13,7 @@ WINDOWS_CHROME_PATH='C:\Program Files\Google\Chrome\Application\chrome.exe'
 FIREWALL_RULE_NAME='Chrome Remote Debug'
 PID_FILE="/tmp/start-chrome-wsl.pids"
 OK_MARK="✅"
+WARN_MARK="❗"
 ERR_MARK="❌"
 
 ok() {
@@ -21,6 +22,10 @@ ok() {
 
 err() {
   echo "${ERR_MARK} $*" >&2
+}
+
+warn() {
+  echo "${WARN_MARK} $*" >&2
 }
 
 set_pid() {
@@ -154,7 +159,7 @@ check_firewall_rule() {
     return 0
   fi
 
-  err "Firewall rule \"${FIREWALL_RULE_NAME}\" is missing; attempting to create it (may prompt for admin)."
+  warn "Firewall rule \"${FIREWALL_RULE_NAME}\" is missing; attempting to create it (may prompt for admin)."
   if RUN_AS_ADMIN=1 run_powershell "New-NetFirewallRule -DisplayName \"${FIREWALL_RULE_NAME}\" -Direction Inbound -LocalPort ${PORT} -Protocol TCP -Action Allow" \
      && run_powershell "${rule_check_cmd}"; then
     ok "Created firewall rule \"${FIREWALL_RULE_NAME}\"."

@@ -69,5 +69,19 @@ Then run:
 - Chrome launch is skipped when port 9222 already listens on Windows (assumed active remote-debug session).
 - For a different remote debugging port or Chrome path, edit `PORT` or `WINDOWS_CHROME_PATH` in `start_chrome_wsl.sh`.
 
+## Chrome DevTools MCP configuration for agents
+
+To use Windows Chrome with any agent running in WSL you have 
+to cofigure the DevTools to connect to `--browser-url=http://127.0.0.1:9222`.
+
+### Codex
+
+```toml
+[mcp_servers.chome-devtools]
+command = "npx"
+args = ["-y", "chrome-devtools-mcp@latest", "--browser-url=http://127.0.0.1:9222"]
+startup_timeout_sec = 20.0
+```
+
 ## License
 MIT License. See `LICENSE` for details.

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Compatible with bash and zsh.
+PACKAGE_VERSION="0.3.2"
 set -e
 set -u
 if command -v setopt >/dev/null 2>&1; then
@@ -339,7 +340,20 @@ start_chrome() {
   fi
 }
 
+ensure_wsl() {
+  if grep -qEi 'Microsoft|WSL' /proc/version >/dev/null 2>&1; then
+    return 0
+  fi
+  err "This tool must be run inside WSL; exiting."
+  exit 1
+}
+
 main() {
+  if [[ "${1-}" == "--version" || "${1-}" == "-V" ]]; then
+    echo "chrome-wsl ${PACKAGE_VERSION:-unknown}"
+    exit 0
+  fi
+  ensure_wsl
   if [[ "${1-}" == "--uninstall" ]]; then
     uninstall_portproxy
     uninstall_firewall_rule

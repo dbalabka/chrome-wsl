@@ -90,11 +90,19 @@ to cofigure the DevTools to connect to `--browser-url=http://127.0.0.1:9222`.
 
 ### Codex
 
+Configuration of [Chrome DevTools](https://github.com/ChromeDevTools/chrome-devtools-mcp):
 ```toml
 [mcp_servers.chome-devtools]
 command = "npx"
 args = ["-y", "chrome-devtools-mcp@latest", "--browser-url=http://127.0.0.1:9222"]
 startup_timeout_sec = 20.0
+```
+
+Configuratio of [Playwrite](https://github.com/microsoft/playwright-mcp):
+```toml
+[mcp_servers.playwright]
+command = "npx"
+args = ["@playwright/mcp@latest", "--browser=chrome", "--isolated", "--cdp-endpoint=http://127.0.0.1:9222"]
 ```
 
 To run Codex inside the container and use the same MCP configuration and authorisation token, mount the Codex configuration folder inside the docker container using the following docker composer settings:

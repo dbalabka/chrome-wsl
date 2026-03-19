@@ -33,6 +33,10 @@ npx @dbalabka/chrome-wsl
 ```
 - If portproxy/firewall entries are missing, run the printed admin PowerShell commands on Windows, then rerun the script.
 - The script logs `socat` output to `/tmp/socat-9222.log`.
+- To run Chrome in headless mode (no visible window, requires Chrome 112+):
+```sh
+npx @dbalabka/chrome-wsl --headless
+```
 - To stop the `socat` forwarder:
 ```sh
  npx @dbalabka/chrome-wsl --stop
@@ -70,6 +74,7 @@ To install globally instead of npx:
 Then run:
   ```sh
   chrome-wsl
+  chrome-wsl --headless
   chrome-wsl --stop
   chrome-wsl --uninstall
   ```
